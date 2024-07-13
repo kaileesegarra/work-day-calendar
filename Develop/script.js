@@ -8,13 +8,40 @@ $(function () {
   // function? How can DOM traversal be used to get the "hour-x" id of the
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
-  //
+  // Display the current date in header of the page
+  $(".saveBtn").on("click", function () {
+    var text = $(this).siblings(".description").val();
+    var time = $(this).parent().attr("id");
+
+    // Set items to local storage
+    localStorage.setItem(time, text);
+  })
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
   // attribute of each time-block be used to conditionally add or remove the
   // past, present, and future classes? How can Day.js be used to get the
   // current hour in 24-hour time?
-  //
+  // 9 AM
+  $("#hour9 .description").val(localStorage.getItem("hour9"));
+  // 10 AM
+  $("#hour10 .description").val(localStorage.getItem("hour10"));
+  // 11 AM
+  $("#hour11 .description").val(localStorage.getItem("hour11"));
+  // 12 PM, noon
+  $("#hour12 .description").val(localStorage.getItem("hour12"));
+  // 1 PM, 13:00
+  $("#hour13 .description").val(localStorage.getItem("hour13"));
+  // 2 PM, 14:00
+  $("#hour14 .description").val(localStorage.getItem("hour14"));
+  // 3 PM, 15:00
+  $("#hour15 .description").val(localStorage.getItem("hour15"));
+  // 4 PM, 16:00
+  $("#hour16 .description").val(localStorage.getItem("hour16"));
+  // 5 PM, 17:00
+  $("#hour17 .description").val(localStorage.getItem("hour17"));
+  // 6 PM, 18:00
+  $("#hour18 .description").val(localStorage.getItem("hour18"));
+  
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
