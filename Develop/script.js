@@ -1,7 +1,7 @@
+$(function () {
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
-$(function () {
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
@@ -15,36 +15,50 @@ $(function () {
 
     // Set items to local storage
     localStorage.setItem(time, text);
-  })
+  });
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
   // attribute of each time-block be used to conditionally add or remove the
   // past, present, and future classes? How can Day.js be used to get the
   // current hour in 24-hour time?
-  // 9 AM
-  $("#hour9 .description").val(localStorage.getItem("hour9"));
-  // 10 AM
-  $("#hour10 .description").val(localStorage.getItem("hour10"));
-  // 11 AM
-  $("#hour11 .description").val(localStorage.getItem("hour11"));
-  // 12 PM, noon
-  $("#hour12 .description").val(localStorage.getItem("hour12"));
-  // 1 PM, 13:00
-  $("#hour13 .description").val(localStorage.getItem("hour13"));
-  // 2 PM, 14:00
-  $("#hour14 .description").val(localStorage.getItem("hour14"));
-  // 3 PM, 15:00
-  $("#hour15 .description").val(localStorage.getItem("hour15"));
-  // 4 PM, 16:00
-  $("#hour16 .description").val(localStorage.getItem("hour16"));
-  // 5 PM, 17:00
-  $("#hour17 .description").val(localStorage.getItem("hour17"));
-  // 6 PM, 18:00
-  $("#hour18 .description").val(localStorage.getItem("hour18"));
-  
+  function updateHourClasses() {
+    var currentHour = dayjs().hour();
+
+    $(".time-block").each(function () {
+      var blockHour = parseInt($(this).attr("id").replace("hour", ""));
+
+      if (blockHour < currentHour) {
+        $(this).removeClass("present future").addClass("past");
+      } else if (blockHour === currentHour) {
+        $(this).removeClass("past future").addClass("present");
+      } else {
+        $(this).removeClass("past present").addClass("future");
+      }
+    });
+  }
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
-  //
+  // Function to load saved events from local storage
+  function loadSavedEvents() {
+    $(".time-block").each(function () {
+      var time = $(this).attr("id");
+      var savedText = localStorage.getItem(time);
+
+      if (savedText !== null) {
+        $(this).find("discrioption").val(savedText);
+      }
+    });
+  }
+
+  // Initial calls
+
+updateHourClasses(); 
+loadSavedEvents();
+
+setInterval(updateHourClasses, 60000);
   // TODO: Add code to display the current date in the header of the page.
+    // Display current date in Header using Day.js
+    var today = dayjs();
+    $('#currentDay').text(today.format('MMM D, YYYY'));
 });
