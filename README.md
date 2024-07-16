@@ -1,4 +1,4 @@
-# Work Day Scheduler
+# Work Day Calendar
 
 ## User Story
 **AS AN** employee with a busy schedule  
